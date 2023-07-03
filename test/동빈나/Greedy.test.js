@@ -1,4 +1,4 @@
-const {Greedy} = require("../src/동빈나/Greedy")
+const {Greedy} = require("../../src/동빈나/Greedy")
 
 test('Greedy_gulid test', () => {
     console.time()
