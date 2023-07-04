@@ -8,10 +8,14 @@ test('DFS Test', () => {
     console.timeEnd()
 })
 
-test('iceDrink Test', () => {
+test('dfs2 Test', () => {
     console.time()
-    const graph = [[0,0,1,1,0], [0,0,0,1,1], [1,1,1,1,1], [0,0,0,0,0]]
-    const visited = Array(5).fill(false);
-    DFS.iceDrink(graph, 0, visited)
+    DFS.dfs2();
+    console.timeEnd()
+})
+
+test('dfs3 Test', () => {
+    console.time()
+    DFS.dfs3();
     console.timeEnd()
 })
