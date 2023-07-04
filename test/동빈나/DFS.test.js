@@ -10,12 +10,6 @@ test('DFS Test', () => {
 
 test('dfs2 Test', () => {
     console.time()
-    DFS.dfs2();
-    console.timeEnd()
-})
-
-test('dfs3 Test', () => {
-    console.time()
-    DFS.dfs3();
+    DFS.;
     console.timeEnd()
 })

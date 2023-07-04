@@ -7,3 +7,9 @@ test('BFS Test', () => {
     BFS.bfs(graph, 0);
     console.timeEnd()
 })
+
+test('BFS2 Test', () => {
+    console.time()
+    BFS.bfs2(3,3,'110\n010\n011');
+    console.timeEnd()
+})
