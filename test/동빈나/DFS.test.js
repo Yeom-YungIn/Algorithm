@@ -10,6 +10,6 @@ test('DFS Test', () => {
 
 test('dfs2 Test', () => {
     console.time()
-    DFS.;
+    DFS.dfs2()
     console.timeEnd()
 })

@@ -19,7 +19,7 @@ module.exports.BFS = {
     bfs2: bfs2 = () => {
         const solution = (n,m, maze) => {
             maze = maze.split('\n').map(m => {
-                m = m.split(''/).map(n => Number(n))
+                m = m.split('').map(n => Number(n))
                 return m
             })
 
@@ -27,7 +27,7 @@ module.exports.BFS = {
             const dy = [0,0,-1,1]
 
             const queue = []
-            let x = 0; y=0;
+            let x = 0, y=0;
             queue.push([x,y])
             while (queue.length !== 0) {
                 const temp = queue.shift();
@@ -51,8 +51,6 @@ module.exports.BFS = {
                 }
             }
         }
-        console.log(maze[n-1][m-1])
-
-        solution()
+        solution(3,3,'110\n010\n011')
     }
 }

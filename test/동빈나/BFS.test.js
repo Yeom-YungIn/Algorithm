@@ -10,6 +10,6 @@ test('BFS Test', () => {
 
 test('BFS2 Test', () => {
     console.time()
-    BFS.bfs2(3,3,'110\n010\n011');
+    BFS.bfs2();
     console.timeEnd()
 })
