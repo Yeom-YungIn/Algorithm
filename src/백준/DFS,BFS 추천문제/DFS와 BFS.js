@@ -16,12 +16,11 @@ module.exports.DFSBFS = {
             graph[i] = [];
         }
 
-        for(let j = 0; j < m; j ++) {
-            let [from, to] = input[j+1].split(" ").map(Number);
+        for(let j = 1; j < m; j ++) {
+            let [from, to] = input[j].split(" ").map(Number);
             graph[from].push(to);
             graph[to].push(from);
         }
-        console.log(graph)
 
         graph.forEach((element) => {
             element.sort((a,b) => a-b);
@@ -29,15 +28,16 @@ module.exports.DFSBFS = {
 
         console.log(graph)
 
-        let visited = new Array(n).fill(false)
+        let visited = new Array(n+1).fill(false)
         let anwer_dfs = [];
         const dfs = (v) => {
             if(visited[v])return;
             visited[v] = true;
             anwer_dfs.push(v)
             for(let i = 0; i < graph[v].length; i ++) {
-                if(!visited[i]){
-                    dfs(i)
+                const next = graph[v][i]
+                if(!visited[next]){
+                    dfs(next)
                 }
             }
         }
@@ -54,7 +54,7 @@ module.exports.DFSBFS = {
                     continue;
                 }
                 visited[x] = 1
-                anwer_dfs.push(x);
+                answer_bfs.push(x);
                 for(let i = 0; i < graph[x].length; i ++) {
                     let next = graph[x][i];
                     if(visited[next] === false) {
