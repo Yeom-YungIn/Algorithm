@@ -6,7 +6,7 @@
     https://www.acmicpc.net/problem/1260
  */
 module.exports.DFSBFS = {
-    n1260: n1260 = () => {
+    n1260: () => {
         const fs = '4 5 1\n1 2\n1 3\n1 4\n2 4\n3 4'
         let input = fs.toString().split('\n')
 
