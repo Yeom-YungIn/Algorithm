@@ -7,29 +7,16 @@ module.exports.n2331 = {
         const input = fs.toString()
         const [A, P] = input.split(' ').map(x => Number(x))
         console.log(A,P)
-        let list = []
-        list.push(A)
-        console.log(list)
+        let list = [A]
 
-        const X = (x,P) => {
-            for (let i = 1; i < P; i ++) {
-                x *=x
-            }
-            return x
-        }
-        let i = 0;
         while (true) {
-            const Dn = list[i].toString().split('').map(x => Number(
-                X(x, P)
-            ))
-            let val = 0;
-            Dn.forEach(num => {
-                val += num
-            })
-            list.push(val)
-            console.log(list)
-            // break;
-            i +=1
+            const curVal = String(list[list.length - 1])
+            const nextVal = curVal.split('').reduce((arr, cur) => arr + Number(cur)**P, 0)
+            if (list.includes(nextVal)) {
+                console.log(list.indexOf(nextVal))
+                break;
+            }
+            list.push(nextVal)
         }
     }
 }
