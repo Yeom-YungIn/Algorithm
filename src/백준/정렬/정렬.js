@@ -29,6 +29,18 @@ const sorting = {
         console.timeEnd("Performance Time");
     },
 
+    n11651: () => {
+        const input = '5\n0 4\n1 2\n1 -1\n2 2\n3 3'.toString().trim().split('\n');
+        const N = Number(input.shift());
+        const list = input.map(x => x.split(' ').map(Number));
+
+        list.sort((a,b) => {
+            if(a[1] == b[1]) return a[0] - b[0]
+            return a[1] - b[1];
+        })
+        console.log(list.map(x => x.join(' ')).join('\n'))
+    },
+
     n1181: () => {
         const fs = '13\nbut\ni\nwont\nhesitate\nno\nmore\nno\nmore\nit\ncannot\nwait\nim\nyours'
         const input = fs.toString().trim().split('\n');
