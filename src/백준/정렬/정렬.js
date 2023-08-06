@@ -57,6 +57,7 @@ const sorting = {
     },
 
     n10814: () => {
+        console.time("Performance Time");
         const fs = '3\n21 Junkyu\n21 Dohyun\n20 Sunyoung'
         const input = fs.toString().trim().split('\n');
         const N = +input.shift();
@@ -65,6 +66,23 @@ const sorting = {
             return a[0] - b[0]
         })
         console.log(list.map(x => x.join(' ')).join('\n'))
+        console.timeEnd("Performance Time");
+    },
+
+    n18879: () => {
+        console.time("Performance Time");
+        const input = '5\n2 4 -10 4 -9'.toString().trim().split('\n');
+        const N = Number(input.shift());
+        const result = [];
+        const list = input.toString().split(' ').map(Number);
+        const arr = [...new Set(list)].sort((a,b) => a-b)
+        const obj = {};
+        arr.forEach((item, idx) => obj[item] = idx);
+        for (let i = 0; i < list.length; i ++) {
+            result.push(obj[list[i]]);
+        }
+        console.log(result.join(' '))
+        console.timeEnd("Performance Time");
     }
 }
 
