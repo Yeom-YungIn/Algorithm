@@ -51,7 +51,7 @@ const quickSorting = () => {
     return list.join('')
 }
 
-const indexSorting = () => {
+const countingSorting = () => {
     const list = [7,5,9,0,3,1,6,2,9,1,4,8,0,5,2]
     const arr = Array(Math.max(...list) + 1).fill(0)
     const result = []
@@ -115,6 +115,6 @@ module.exports = {
     selectSorting,
     insertSorting,
     quickSorting,
-    indexSorting,
+    countingSorting,
     sol
 }
