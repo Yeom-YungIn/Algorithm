@@ -11,3 +11,7 @@ test('n2512', () => {
 test('n2343', () => {
     binarySearch.n2343();
 })
+
+test('n6236',() => {
+    binarySearch.n6236();
+})

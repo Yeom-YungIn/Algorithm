@@ -30,6 +30,6 @@ module.exports.n11724 = {
             dfs(i)
         }
 
-        console.log(cnt)
+        return cnt
     }
 }

@@ -93,8 +93,40 @@ const n2343 = () => {
 
 }
 
+const n6236 = () => {
+    const input = '7 5\n100\n400\n300\n100\n500\n101\n400'.toString().split('\n');
+    // const input = require('fs').readFileSync('/dev/stdin').toString().split('\n');
+    const [N, M] = input.shift().toString().split(' ').map(Number);
+    const list = input.map(Number);
+
+    let start = Math.max(...list), end = list.reduce((acc, x) => acc += x);
+    while (start <= end) {
+        let mid = Math.floor((start+end) / 2);
+        let sum = 0, cnt = 0;
+        for (let i =0; i < N; i ++) {
+            if (sum + list[i] > mid) {
+                cnt++;
+                sum = 0;
+            }
+            sum += list[i];
+        }
+        if(sum > 0) {
+            cnt ++;
+        }
+
+        if (cnt <= M) {
+            end = mid -1;
+        } else {
+            start = mid +1;
+        }
+    }
+
+    console.log(start)
+}
+
 module.exports = {
     n2805,
     n2512,
-    n2343
+    n2343,
+    n6236
 }

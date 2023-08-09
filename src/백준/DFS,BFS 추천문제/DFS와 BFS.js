@@ -7,8 +7,9 @@
  */
 module.exports.DFSBFS = {
     n1260: () => {
-        const fs = '4 5 1\n1 2\n1 3\n1 4\n2 4\n3 4'
-        let input = fs.toString().split('\n')
+        // const fs = '4 5 1\n1 2\n1 3\n1 4\n2 4\n3 4'
+        const fs= require('fs')
+        let input = fs.readFileSync('/dev/stdin').toString().split('\n')
 
         let [n, m, v] = input[0].split(" ").map(Number)
         let graph = new Array(n)
