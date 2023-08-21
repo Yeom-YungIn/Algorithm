@@ -182,5 +182,82 @@ module.exports.BFSDFS = {
         answer.sort((a,b) => a-b)
         answer.unshift(answer.length)
         console.log(answer.join('\n'))
+    },
+
+    n1012: () => {
+        const input = '2\n10 8 17\n0 0\n1 0\n1 1\n4 2\n4 3\n4 5\n2 4\n3 4\n7 4\n8 4\n9 4\n7 5\n8 5\n9 5\n7 6\n8 6\n9 6\n10 10 1\n5 5'.toString().trim().split('\n');
+        const T = Number(input.shift());
+        const answer = [];
+        for (let i = 0; i < T; i ++) {
+            const [M, N, K] = input.shift().split(' ').map(Number);
+            let map = Array.from({length: M}, () => Array(N).fill(0))
+            for (let j = 0; j < K; j ++) {
+                const [x, y] = input.shift().split(' ').map(Number);
+                map[x][y] = 1;
+            }
+            const visited = Array.from({length: M}, () => Array(N).fill(0))
+            const move = [[-1, 0], [1, 0], [0, -1], [0, 1]];
+            let queue = [], cnt = 0;
+
+            const bfs = (a, b) => {
+                queue.push([a, b]);
+                while (queue.length) {
+                    const [x,y] = queue.shift();
+                    if(visited[x][y]) continue;
+                    visited[x][y] = 1;
+                    for (const val of move) {
+                        const nx = x + val[0], ny = y + val[1];
+                        if (nx < 0 || nx >= M || ny < 0 || ny >= N) continue;
+                        if (map[nx][ny]) {
+                            queue.push([nx, ny]);
+                        };
+                    }
+                }
+            }
+            for (let k = 0; k < M; k ++) {
+                for (let j = 0; j < N; j ++) {
+                    if(!visited[k][j] && map[k][j]) {
+                        cnt ++;
+                        bfs(k,j)
+                    }
+                }
+            }
+
+            answer.push(cnt);
+        }
+        console.log(answer.join('\n'));
+    },
+
+    n7562: () => {
+        const input = '3\n8\n0 0\n7 0\n100\n0 0\n30 50\n10\n1 1\n1 1'.toString().split('\n');
+        const T = Number(input.shift());
+        const answer = [];
+        for (let j = 0; j < T; j ++) {
+            const i = Number(input.shift());
+            const move = [[-1, 2], [-1, -2], [-2, 1], [-2, -1], [1, 2],[1, -2],[2, 1],[2, -1]];
+            const cur = input.shift().split(' ').map(Number), des = input.shift().split(' ').map(Number);
+            const visited = Array.from({length: i}, () => Array(i).fill(0))
+
+            const bfs = (n) => {
+                let queue = [n];
+                while (queue.length) {
+                    let [x, y, depth] = queue.shift();
+                    if(x === des[0] && y === des[1]) {
+                       return answer.push(depth);
+                    }
+                    for (const val of move) {
+                        const nx = x + val[0], ny = y + val[1];
+                        if (nx < 0 || ny < 0 || nx >= i || ny >= i) continue;
+                        if(!visited[nx][ny]) {
+                            visited[nx][ny] = 1;
+                            queue.push([nx, ny, depth + 1])
+                        }
+                    }
+                }
+            }
+            bfs([cur[0], cur[1], 0]);
+        }
+
+        console.log(answer.join('\n'))
     }
 }
