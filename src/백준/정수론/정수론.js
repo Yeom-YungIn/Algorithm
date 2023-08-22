@@ -1,3 +1,4 @@
+const fs = require("fs");
 module.exports.NumberTheory = {
     n1929: () => {
         const [n, m] = '3 16'.toString().trim().split(' ').map(Number);
@@ -39,7 +40,7 @@ module.exports.NumberTheory = {
 
     n1037: () => {
         const fs = require('fs');
-        const input = '6\n3 4 2 12 6 8'.toString().trim().split("\n");
+        const input = fs.readFileSync("/dev/stdin").toString().trim().split("\n");
         const nums = input.map(v => v.split(' ').map(x => +x));
         const factor = nums[1]
 
@@ -49,5 +50,26 @@ module.exports.NumberTheory = {
             factor.sort((a,b)=>a-b)
             console.log(factor[0] * factor[factor.length - 1])
         }
+    },
+
+    n1978: () => {
+        const fs = require('fs');
+        const input = '4\n1 3 5 7 8'.toString().trim().split("\n");
+
+        const isPrime = (n) => {
+            if (n == 1) {
+                return false;
+            }
+
+            for (let i = 2; i <= Math.sqrt(n); i++) {
+                if (n % i === 0) {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+        const [c, nums] = '4\n1 3 5 7 8'.toString().trim().split("\n");
+        console.log(nums.split(" ").filter(v => isPrime(v)).length);
     }
 }
