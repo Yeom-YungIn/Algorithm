@@ -71,5 +71,28 @@ module.exports.NumberTheory = {
         }
         const [c, nums] = '4\n1 3 5 7 8'.toString().trim().split("\n");
         console.log(nums.split(" ").filter(v => isPrime(v)).length);
+    },
+    n2581: () => {
+        // const [N, M] = require('fs').readFileSync('/dev/stdin').toString().split('\n').map(Number);
+        const [N, M] = '60\n100'.toString().split('\n').map(Number);
+        let arr = Array(M-N);
+        for (let i = 0; i <= (M-N); i ++) {
+            arr[i] = i + N;
+        }
+
+        const isPrime = (n) => {
+            if(n == 1) return false;
+            for (let j = 2; j <= Math.sqrt(n); j ++) {
+                if (n%j == 0) return false
+            }
+            return true;
+        }
+        arr = arr.filter(x => isPrime(x));
+        console.log(arr)
+        if (arr.length == 0) {
+            console.log(-1)
+        }else {
+            console.log(arr.reduce((acc, cul) => acc += cul), Math.min(...arr));
+        }
     }
 }
