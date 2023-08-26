@@ -259,5 +259,72 @@ module.exports.BFSDFS = {
         }
 
         console.log(answer.join('\n'))
+    },
+
+    n1707: () => {
+        const input = '2\n3 2\n1 3\n2 3\n4 4\n1 2\n2 3\n3 4\n4 2'.toString().trim().split('\n');
+        // const input = require('fs').readFileSync('/dev/stdin').toString().trim().split('\n');
+        const K = +input.shift();
+        const SET_A = 1;
+        const SET_B = 2;
+
+        const dfs = (start, graph, visited) => {
+            visited[start] = SET_A;
+            const stack = [start];
+            while (stack.length) {
+                const node = stack.pop();
+                const curSet = visited[node];
+                const nextSet = curSet === SET_A ? SET_B : SET_A;
+                if (!graph[node]) {
+                    continue;
+                }
+                for (let i = 0; i < graph[node].length; i++) {
+                    const adjNode = graph[node][i];
+                    if (visited[adjNode] === curSet) {
+                        return false;
+                    }
+                    if (!visited[adjNode]) {
+                        visited[adjNode] = nextSet;
+                        stack.push(adjNode);
+                    }
+                }
+            }
+            return true;
+        };
+
+        const output = Array(K).fill('YES');
+
+        for (let i = 0; i < K; i++) {
+            const [V, E] = input.shift().split(' ').map(Number);
+            const edges = input.splice(0, E).map(v => v.split(' ').map(Number));
+            const graph = edges.reduce((acc, v) => {
+                const from = v[0];
+                const to = v[1];
+                if (acc[from]) {
+                    acc[from].push(to);
+                } else {
+                    acc[from] = [to];
+                }
+                if (acc[to]) {
+                    acc[to].push(from);
+                } else {
+                    acc[to] = [from];
+                }
+                return acc;
+            }, {});
+
+            const visited = Array(V + 1).fill(0);
+            for (let j = 1; j <= V; j++) {
+                if (visited[j]) {
+                    continue;
+                }
+                if (!dfs(j, graph, visited)) {
+                    output[i] = 'NO';
+                    break;
+                }
+            }
+        }
+
+        console.log(output.join('\n'));
     }
 }
