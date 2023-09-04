@@ -127,5 +127,41 @@ module.exports.graph = {
         }
 
         console.log(bfs(x,k))
+    },
+
+    n2468: () => {
+        const input = '5\n6 8 2 6 2\n3 2 3 4 6\n6 7 3 3 2\n7 2 5 3 6\n8 9 5 2 7'.toString().trim().split('\n');
+        const n = Number(input.shift());
+        const map = input.map(x => x.split(' ').map(Number));
+        const move = [[-1, 0], [1, 0], [0, -1], [0, 1]];
+        const max = Math.max(...map.flat())
+        const answer = [];
+        let maxSafeArea = 0;
+        const dfs = (limit, i, j, visited) => {
+            if (!visited[i][j]) visited[i][j] = true;
+
+            for (const [dx, dy] of move) {
+                const nx = i + dx, ny = j + dy;
+                if (nx < 0 || ny < 0 || nx >= n || ny >= n) continue;
+                if (!visited[nx][ny] && map[nx][ny] === limit) {
+                    dfs(limit, nx, ny, visited);
+                }
+            }
+        }
+
+        for (let k = 0; k <= max; k++) {
+            let cnt = 0;
+            const visited = Array.from({ length: n }, () => Array(n).fill(false));
+            for (let i = 0; i < n; i++) {
+                for (let j = 0; j < n; j++) {
+                    if (!visited[i][j] && map[i][j] > k) {
+                        dfs(k, i, j, visited);
+                        cnt++;
+                    }
+                }
+            }
+            maxSafeArea = Math.max(maxSafeArea, cnt);
+        }
+        console.log(maxSafeArea);
     }
 }
