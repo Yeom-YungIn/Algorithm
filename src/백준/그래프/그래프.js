@@ -163,5 +163,121 @@ module.exports.graph = {
             maxSafeArea = Math.max(maxSafeArea, cnt);
         }
         console.log(maxSafeArea);
+    },
+
+    n4485 : () => {
+        const input = '5\n3 7 2 0 1\n2 8 0 9 1\n1 2 1 8 1\n9 8 9 2 0\n3 6 5 1 5\n7\n9 0 5 1 1 5 3\n4 1 2 1 6 5 3\n0 7 6 1 6 8 5\n1 1 7 8 3 2 3\n9 4 0 7 6 4 1\n5 8 3 2 4 8 3\n7 4 8 4 8 3 4\n0'.toString().split('\n');
+        // const input = require('fs').readFileSync('/dev/stdin').toString().split('\n');
+        const answerList = []
+        let cnt = 0;
+        while (input.length) {
+            const n = Number(input.shift());
+            if (n == 0) break;
+            let map = Array(n).fill([])
+            for (let i = 0; i < n; i++) {
+                map[i] = input.shift().toString().split(' ').map(Number)
+            }
+            const visited = Array.from({length: n}, () => Array(n).fill(0));
+            const answer = Array.from({length: n}, () => Array(n).fill(125*125));
+            const move = [[-1, 0], [1, 0], [0, -1], [0, 1]];
+
+            const bfs = () => {
+                const q = [[0, 0, 5]];
+                answer[0][0] = answer[0][0] > map[0][0] ? map[0][0] : answer[0][0];
+                visited[0][0] =1;
+                while (q.length) {
+                    const [x, y, val] = q.shift();
+                    for (const next of move) {
+                        const nx = x + next[0], ny = y + next[1];
+                        if(nx < 0 || ny < 0 || nx >= n || ny >= n) continue;
+                        if(!visited[nx][ny]) {
+                            visited[nx][ny] = 1;
+                            answer[nx][ny] = answer[nx][ny] > map[nx][ny] + answer[x][y] ? map[nx][ny] + answer[x][y] : answer[nx][ny];
+                            q.push([nx, ny, answer[nx][ny]]);
+                        }
+                    }
+                    q.sort((a, b) => a[2] - b[2]);
+                }
+            }
+
+            bfs(), cnt ++;
+            answerList.push( `Problem ${cnt}: ` + answer[n-1][n-1])
+        }
+        console.log(answerList.join('\n'))
+    },
+
+    n11657: () => {
+        function bellmanFord(n, edges) {
+            const INF = Infinity;
+            const dist = new Array(n + 1).fill(INF);
+            dist[1] = 0;
+
+            for (let i = 1; i <= n - 1; i++) {
+                for (const [from, to, cost] of edges) {
+                    if (dist[from] !== INF && dist[to] > dist[from] + cost) {
+                        dist[to] = dist[from] + cost;
+                    }
+                }
+            }
+
+            for (const [from, to, cost] of edges) {
+                if (dist[from] !== INF && dist[to] > dist[from] + cost) {
+                    return [-1];
+                }
+            }
+
+            for (let i = 1; i <= n; i++) {
+                if (dist[i] === INF) {
+                    dist[i] = -1;
+                }
+            }
+
+            return dist.slice(2);
+        }
+
+        function solution(input) {
+            const [n, m] = input[0].split(" ").map(Number);
+            const edges = [];
+
+            for (let i = 1; i <= m; i++) {
+                const [a, b, c] = input[i].split(" ").map(Number);
+                edges.push([a, b, c]);
+            }
+
+            const result = bellmanFord(n, edges);
+
+            for (const dist of result) {
+                console.log(dist);
+            }
+        }
+
+        // const input = require("fs").readFileSync("/dev/stdin").toString().trim().split("\n");
+        const input = '3 4\n1 2 4\n1 3 3\n2 3 -4\n3 1 -2'.toString().trim().split("\n");
+        solution(input);
+
+    },
+
+    n11403: () => {
+        const input = '7\n0 0 0 1 0 0 0\n0 0 0 0 0 0 1\n0 0 0 0 0 0 0\n0 0 0 0 1 1 0\n1 0 0 0 0 0 0\n0 0 0 0 0 0 1\n0 0 1 0 0 0 0'.toString().trim().split('\n');
+        let N = +input.shift();
+        let arr = [];
+
+        for (const row of input) {
+            arr.push(row.split(" ").map(Number));
+        }
+
+        for (let k = 0; k < N; k++) {
+            for (let i = 0; i < N; i++) {
+                for (let j = 0; j < N; j++) {
+                    if (arr[i][k] && arr[k][j]) {
+                        arr[i][j] = 1;
+                    }
+                }
+            }
+        }
+
+        for (let i = 0; i < N; i++) {
+            console.log(arr[i].join(" "));
+        }
     }
 }
