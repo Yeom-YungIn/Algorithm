@@ -279,5 +279,37 @@ module.exports.graph = {
         for (let i = 0; i < N; i++) {
             console.log(arr[i].join(" "));
         }
+    },
+
+    n1197 : () => {
+        const input = '3 3\n1 2 1\n2 3 2\n1 3 3'.toString().split('\n');
+        const [v, e] = input.shift().toString().split(' ').map(Number);
+        const list = input.map(x => x.split(' ').map(Number));
+        list.sort((a, b) => a[2] - b[2]);
+        const parent = [...Array(v + 1).keys()];
+
+        const find = (x) => {
+            if(parent[x] === x) return x;
+            else {
+                parent[x] = find(parent[x]);
+                return parent[x]
+            }
+        }
+        const union = (x,y) => {
+            const a = find(x);
+            const b = find(y);
+            if (a !== b) {
+                parent[b] = a
+            }
+        }
+
+        let answer = 0
+        let selectedEdges = 0;
+        for (const [start, end, val] of list) {
+            if(find(start) === find(end)) continue;
+            else union(start, end), answer += val, selectedEdges ++;
+            if(selectedEdges === v-1) break;
+        }
+        console.log(answer)
     }
 }
