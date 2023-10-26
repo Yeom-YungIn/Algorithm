@@ -16,23 +16,23 @@ module.exports.NumberTheory = {
         }
     },
 
-    n11653: () => {
+    n11653 : () => {
         console.time("Performance Time");
-        const N = Number('9991');
+        const N = '9991';
 
-        const factorization = (n) => {
-            let i=2,  answer = [];
+        const sol = (n) => {
+            let i = 2, answer = [];
             while (n > 1) {
-                while (n % i === 0) {
-                    answer.push(i);
+                if (n % i == 0) {
                     n /= i;
+                    answer.push(i);
                 }
                 i++;
             }
-
             return answer;
         }
-        console.log(factorization(N).join('\n'));
+
+        console.log(sol(N).join('\n'))
         console.timeEnd("Performance Time");
     },
 
@@ -41,7 +41,6 @@ module.exports.NumberTheory = {
         const input = fs.readFileSync("/dev/stdin").toString().trim().split("\n");
         const nums = input.map(v => v.split(' ').map(x => +x));
         const factor = nums[1]
-
         if (factor.length == 1) {
             console.log(factor[0] * factor[0])
         } else {
@@ -50,16 +49,22 @@ module.exports.NumberTheory = {
         }
     },
 
-    n1978: () => {
-        const fs = require('fs');
-        const input = '4\n1 3 5 7 8'.toString().trim().split("\n");
+    // n1037: () => {
+    //   const input = require('fs').readFileSync('/dev/stdin').toString().split('\n');
+    //     const A = Number(input.shift());
+    //     const B = input.toString().split(' ').map(Number).sort((a,b)=> a-b);
+    //     console.log(B[0] * B[A-1])
+    // },
+
+    n1978 : () => {
+        const [c, nums] = '4\n1 3 5 7'.toString().split('\n');
 
         const isPrime = (n) => {
-            if (n == 1) {
+            if (n === 1) {
                 return false;
             }
-
             for (let i = 2; i <= Math.sqrt(n); i++) {
+                console.log(Math.sqrt(n))
                 if (n % i === 0) {
                     return false;
                 }
@@ -67,9 +72,35 @@ module.exports.NumberTheory = {
 
             return true;
         }
-        const [c, nums] = '4\n1 3 5 7 8'.toString().trim().split("\n");
-        console.log(nums.split(" ").filter(v => isPrime(v)).length);
+
+        console.log(nums.split(' ').filter(v => isPrime(v)).length)
+
     },
+
+    n1850: () => {
+        const [a, b] =  require('fs').readFileSync('/dev/stdin').toString().split(' ').map(Number);
+        const num = (n) => {
+            let c = ''
+            for (let i = 0; i < n; i++) {
+                c += '1'
+            }
+            return Number(c)
+        }
+        const sol = (n, m) => {
+            let list = [n, m].map(x => num(x)).sort((a, b) => b - a);
+            while (list.length > 1) {
+                const mod = list[0] % list[1];
+                if (mod > 0) {
+                    list.push(mod);
+                    list.shift();
+                }
+                if(mod == 0) return list[1];
+            }
+        }
+
+        console.log(sol(a,b))
+    },
+
     n2581: () => {
         // const [N, M] = require('fs').readFileSync('/dev/stdin').toString().split('\n').map(Number);
         const [N, M] = '60\n100'.toString().split('\n').map(Number);
@@ -144,116 +175,80 @@ module.exports.NumberTheory = {
         const memory = process.memoryUsage().heapUsed / 1024 / 1024;
         console.log(`약 ${Math.round(memory * 100) / 100} MB의 메모리를 사용중입니다.`);
         console.time('n16563')
-        const fs = require('fs');
-        const input = '5\n5 4 45 64 54'.toString().trim().split('\n');
+        const [n, ...k] = '5\n5 4 45 64 54'.toString().split('\n');
 
-        function getPrimeFactors(n) {
-            const factors = [];
+        const sol = (n) => {
+            let answer = [];
 
-            while (n % 2 === 0) {
-                factors.push(2);
-                n /= 2;
-            }
-
-            for (let i = 3; i * i <= n; i += 2) {
-                while (n % i === 0) {
-                    factors.push(i);
-                    n /= i;
+                while (n % 2 === 0) {
+                    answer.push(2);
+                    n /= 2;
                 }
-            }
 
-            if (n > 1) {
-                factors.push(n);
-            }
+                for (let i = 3; i * i <= n; i += 2) {
+                    while (n % i === 0) {
+                        answer.push(i);
+                        n /= i;
+                    }
+                }
 
-            return factors;
+                if (n > 1) {
+                    answer.push(n);
+                }
+
+            return answer.join(' ');
         }
 
-        const N = Number(input[0]);
-        const numbers = input[1].split(' ').map(Number);
-
-        const results = [];
-        for (let i = 0; i < N; i++) {
-            const primeFactors = getPrimeFactors(numbers[i]);
-            results.push(primeFactors.join(' '));
-        }
-
-        console.log(results.join('\n'));
+        console.log(k.toString().split(' ').map(Number).map(v => sol(v)).join('\n'))
         console.timeEnd('n16563')
     },
 
-    n16563_2: () => {
-        const memory = process.memoryUsage().heapUsed / 1024 / 1024;
-        console.log(`약 ${Math.round(memory * 100) / 100} MB의 메모리를 사용중입니다.`);
-        console.time('n16563_2')
-        const fs = require('fs');
-        const input = '5\n5 4 45 64 54'.toString().trim().split('\n');
+    n17425: () => {
+        const input = '5\n1\n2\n10\n70\n10000'.toString().trim().split('\n').map(Number);
+        // const input = require('fs').readFileSync('/dev/stdin').toString().trim().split('\n').map(Number);
+        const T = input.shift();
+        const list = input;
 
-        function getPrimeFactors(n) {
-            const factors = [];
-            for (let i = 2; i * i <= n; i++) {
-                while (n % i === 0) {
-                    factors.push(i);
-                    n /= i;
+        const answer = []
+        for (let val of  list) {
+            let sum = 0;
+            for (let i =0; i<= val; i ++) {
+                //[0,1,2,3,4,5,6,7,8,9,10]
+                for(let j = 0; j <= i; j ++) {
+                    if(j == 0) continue;
+                    if (i%j === 0) {
+                        sum += j;
+                    }
                 }
             }
-            if (n > 1) {
-                factors.push(n);
-            }
-            return factors;
+            answer.push(sum)
         }
+        console.log(answer.join('\n'));
 
-        const N = Number(input[0]);
-        const numbers = input[1].split(' ').map(Number);
 
-        const results = [];
-        for (let i = 0; i < N; i++) {
-            const primeFactors = getPrimeFactors(numbers[i]);
-            results.push(primeFactors.join(' '));
-        }
-
-        console.log(results.join('\n'));
-        console.timeEnd('n16563_2')
-    },
-
-    n16563_3: () => {
-        const memory = process.memoryUsage().heapUsed / 1024 / 1024;
-        console.log(`약 ${Math.round(memory * 100) / 100} MB의 메모리를 사용중입니다.`);
-        console.time('n16563_3')
-        const input = '5\n5 4 45 64 54'.toString().trim().split('\n');
-        // const input = require('fs').readFileSync('/dev/stdin').toString().trim().split('\n');
-        const N = Number(input.shift());
-        const list = input.toString().split(' ').map(Number);
-
-        let arr = Array(Math.max(...list)+1);
-        for (let i = 0; i <= Math.max(...list); i ++) {
-            arr[i] = i;
-        }
-        arr.splice(0,2, false,false)
-        for (let i = 2; i <= Math.sqrt(Math.max(...list)); i ++) {
-            if(arr[i])
-                for (let j = i*i; j<= Math.max(...list); j +=i) {
-                    arr[j] = false;
-                }
-        }
-
-        arr = arr.filter(x => x>0)
-
-        let answer = Array.from({length: N}, () => []);
-        for (let i = 0; i < N; i ++) {
-            let val = list[i]
-            let j = 0;
-            while (val != 1) {
-                if (val%arr[j] == 0) {
-                    val = val/arr[j]
-                    answer[i].push(arr[j]);
-                } else {
-                    j++;
-                }
-            }
-        }
-        console.log(answer.map(x => x.join(' ')).join('\n'));
-        console.timeEnd('n16563_3')
-    },
-
+        // const answer = []
+        // for (let val of  list) {
+        //     let sum = 0;
+        //
+        //     for (let i =0; i<= val; i ++) {
+        //         let arr = Array(val+1).fill(1);
+        //         for(let j = 1; j <= i; j ++) {
+        //             if (arr[j]) {
+        //                 if (i % j === 0) {
+        //                     // console.log(j, i/j)
+        //                     arr[j] = 0;
+        //                     sum += j;
+        //                     if(arr[i/j]) {
+        //                         arr[i / j] = 0
+        //                         sum += i / j;
+        //                     }
+        //                 }
+        //                 arr[j] = 0;
+        //             }
+        //         }
+        //     }
+        //     answer.push(sum)
+        // }
+        // console.log(answer.join('\n'));
+    }
 }
