@@ -2,7 +2,7 @@
   "name": "algorithm",
   "version": "0.0.1",
   "description": "JavaScript Algorithm for Codeing Test",
-  "main": "index.js",
+  "main": "",
   "scripts": {
     "test": "jest"
   },
