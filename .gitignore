@@ -1,3 +1,2 @@
 .idea
-/test/동빈나/
-/test/백준/
+/__test__/greedy/
