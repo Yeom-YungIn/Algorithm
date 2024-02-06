@@ -18,4 +18,20 @@ export class Greedy {
         console.log(result);
         return result;
     }
+
+    n1541 () {
+        // const fs = require ('fs').readFileSync('/dev/stdin');
+        const fs = '55-50+40';
+        const input = fs.toString();
+
+        const minusLocation = input.indexOf('-');
+        if (minusLocation === -1) {
+            console.log(input.split(/[\+-]/).map(x => parseInt(x)).reduce((acc, x) => acc += x));
+        } else {
+            const front = input.slice(0, minusLocation).split(/[\+-]/).map(x => parseInt(x)).reduce((acc, x) => acc += x)
+            const back = input.slice(minusLocation+1).split(/[\+-]/).map(x => parseInt(x)).reduce((acc, x) => acc += x)
+            console.log(front - back);
+            return front - back;
+        }
+    }
 }
